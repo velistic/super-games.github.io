@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE HUNGER GAMES — ROBLOX</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #00b4c8;
+    --red-bright: #00e5ff;
+    --gold: #ffe040;
+    --gold-dim: #b8a000;
+    --dark: #020d10;
+    --dark2: #061418;
+    --dark3: #081c20;
+    --panel: #071518;
+    --border: rgba(0,229,255,0.22);
+    --text: #c8eef2;
+    --text-dim: #4a7a82;
+    --mono: 'Share Tech Mono', monospace;
+    --display: 'Orbitron', sans-serif;
+    --body: 'Rajdhani', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16px;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.65) 100%);
+    pointer-events: none;
+    z-index: 9998;
+  }
+  header {
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    padding: 0 3rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--panel);
+  }
+  .logo { font-family: var(--display); font-size: 13px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
+  .logo span { color: var(--red); }
+  nav { display: flex; gap: 2rem; font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--text-dim); }
+  nav a { text-decoration: none; color: inherit; text-transform: uppercase; transition: color 0.2s; }
+  nav a:hover { color: var(--gold); }
+  .live-badge { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--red-bright); text-transform: uppercase; }
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red-bright); animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+  .hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 5rem 2rem;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,180,200,0.1) 0%, transparent 70%),
+                linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(0,229,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .seal {
+    width: 80px; height: 80px;
+    border: 2px solid var(--gold-dim);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    animation: spin 20s linear infinite;
+  }
+  .seal::before { content:''; position:absolute; inset:-6px; border-radius:50%; border:1px solid rgba(0,229,255,0.2); }
+  .seal::after { content:''; position:absolute; inset:-12px; border-radius:50%; border:1px solid rgba(0,229,255,0.1); }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  .seal-inner { animation: spin-rev 20s linear infinite; display:block; }
+  @keyframes spin-rev { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
+  .hero-district { font-family:var(--mono); font-size:11px; letter-spacing:0.5em; color:var(--red); text-transform:uppercase; margin-bottom:1.5rem; }
+  .hero-title { font-family:var(--display); font-size:clamp(2.8rem,7vw,6rem); font-weight:900; line-height:0.95; letter-spacing:0.05em; text-transform:uppercase; color:#fff; margin-bottom:0.5rem; }
+  .hero-title .accent { color:var(--gold); }
+  .hero-title .red { color:var(--red); }
+  .hero-sub { font-family:var(--display); font-size:clamp(0.7rem,1.8vw,1.1rem); letter-spacing:0.4em; color:var(--text-dim); text-transform:uppercase; margin-bottom:3rem; }
+  .hero-motto { font-family:var(--body); font-size:1.15rem; font-weight:300; font-style:italic; color:var(--gold); letter-spacing:0.08em; margin-bottom:3rem; opacity:0.8; }
+  .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  .btn { font-family:var(--display); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; padding:14px 32px; border:none; cursor:pointer; text-decoration:none; display:inline-block; transition:all 0.2s; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
+  .btn-primary { background:var(--red); color:#fff; }
+  .btn-primary:hover { background:var(--red-bright); transform:scale(1.03); }
+  .btn-secondary { background:transparent; color:var(--gold); border:1px solid var(--gold-dim); }
+  .btn-secondary:hover { background:rgba(212,175,55,0.08); border-color:var(--gold); }
+  .ticker-wrap { background:var(--red); padding:8px 0; overflow:hidden; position:relative; }
+  .ticker-inner { display:flex; animation:ticker 30s linear infinite; white-space:nowrap; }
+  .ticker-item { font-family:var(--mono); font-size:11px; letter-spacing:0.15em; color:rgba(255,255,255,0.9); padding:0 4rem; text-transform:uppercase; }
+  .ticker-item::before { content:'◆'; margin-right:1.5rem; font-size:8px; opacity:0.6; }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+  .section { padding:4rem 3rem; max-width:1400px; margin:0 auto; }
+  .section-label { font-family:var(--mono); font-size:10px; letter-spacing:0.4em; color:var(--red); text-transform:uppercase; margin-bottom:0.5rem; }
+  .section-title { font-family:var(--display); font-size:1.8rem; font-weight:700; color:#fff; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2.5rem; border-bottom:1px solid var(--border); padding-bottom:1rem; }
+  .section-title span { color:var(--gold); }
+  .status-bar {
+    background:var(--panel); border:1px solid var(--border); padding:1.5rem 2rem;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1.5rem;
+    margin-bottom:3rem; clip-path:polygon(16px 0%,100% 0%,calc(100% - 16px) 100%,0% 100%);
+    position:relative;
+  }
+  .status-bar::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--red),transparent); }
+  .stat-item { text-align:center; }
+  .stat-label { font-family:var(--mono); font-size:9px; letter-spacing:0.3em; color:var(--text-dim); text-transform:uppercase; margin-bottom:6px; }
+  .stat-value { font-family:var(--display); font-size:1.8rem; font-weight:900; color:#fff; line-height:1; }
+  .stat-value.red { color:var(--red-bright); }
+  .stat-value.gold { color:var(--gold); }
+  .stat-value.blink { animation:blink 1s step-end infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .arenas-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5rem; }
+  .arena-card { background:var(--panel); border:1px solid var(--border); position:relative; overflow:hidden; transition:border-color 0.3s,transform 0.3s; cursor:pointer; }
+  .arena-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+  .arena-card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; }
+  .arena-card.status-active::before { background:var(--red-bright); }
+  .arena-card.status-standby::before { background:var(--gold); opacity:0.5; }
+  .arena-card.status-locked::before { background:var(--text-dim); opacity:0.3; }
+  .arena-banner { height:130px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .arena-banner-bg { position:absolute; inset:0; opacity:0.5; }
+  .arena-icon { font-size:3.5rem; position:relative; z-index:1; }
+  .bg-centennial { background:radial-gradient(ellipse at 50% 60%,#002a30 0%,#001a1f 40%,#000c10 100%),repeating-linear-gradient(45deg,rgba(0,229,255,0.03) 0px,rgba(0,229,255,0.03) 1px,transparent 1px,transparent 40px); }
+  .arena-body { padding:1.25rem; }
+  .arena-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:0.75rem; gap:0.75rem; }
+  .arena-name { font-family:var(--display); font-size:1rem; font-weight:700; color:#fff; letter-spacing:0.05em; text-transform:uppercase; }
+  .arena-status-badge { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; padding:3px 8px; border:1px solid; text-transform:uppercase; white-space:nowrap; flex-shrink:0; }
+  .badge-active { color:var(--red-bright); border-color:var(--red-bright); animation:pulse-border 1.5s ease infinite; }
+  .badge-standby { color:var(--gold); border-color:var(--gold-dim); }
+  .badge-locked { color:var(--text-dim); border-color:rgba(106,106,136,0.3); }
+  @keyframes pulse-border { 0%,100%{box-shadow:0 0 0 0 rgba(255,34,68,0)} 50%{box-shadow:0 0 8px 2px rgba(255,34,68,0.25)} }
+  .arena-desc { font-size:13px; color:var(--text-dim); line-height:1.5; margin-bottom:1rem; font-weight:300; }
+  .arena-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem; padding-top:0.75rem; border-top:1px solid rgba(0,229,255,0.1); }
+  .arena-stat { text-align:center; }
+  .arena-stat-label { font-family:var(--mono); font-size:8px; letter-spacing:0.2em; color:var(--text-dim); text-transform:uppercase; margin-bottom:3px; }
+  .arena-stat-val { font-family:var(--mono); font-size:14px; color:var(--gold); }
+  .arena-card.status-active .arena-stat-val { color:var(--red-bright); }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+  .leaderboard-table { width:100%; border-collapse:collapse; font-family:var(--mono); font-size:13px; }
+  .leaderboard-table th { font-size:9px; letter-spacing:0.3em; color:var(--text-dim); text-transform:uppercase; padding:0.75rem 1rem; border-bottom:1px solid var(--border); text-align:left; font-weight:400; }
+  .leaderboard-table td { padding:0.9rem 1rem; border-bottom:1px solid rgba(0,229,255,0.07); vertical-align:middle; }
+  .leaderboard-table tr:hover td { background:rgba(0,229,255,0.03); }
+  .rank-num { font-family:var(--display); font-size:1.1rem; color:var(--text-dim); font-weight:900; }
+  .rank-num.top { color:var(--gold); }
+  .rank-num.second { color:#a0a0b0; }
+  .rank-num.third { color:#8b5a2b; }
+  .player-name { font-family:var(--body); font-size:15px; font-weight:600; color:#fff; }
+  .district-tag { font-size:9px; letter-spacing:0.15em; color:var(--text-dim); margin-top:2px; text-transform:uppercase; }
+  .kills-count { font-family:var(--display); font-size:1rem; color:var(--red-bright); font-weight:700; }
+  .wins-count { font-family:var(--display); font-size:1rem; color:var(--gold); font-weight:700; }
+  .bar-wrap { width:80px; height:4px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  .bar-fill { height:100%; background:var(--red); }
+  .log-panel { background:var(--panel); border:1px solid var(--border); max-height:380px; overflow-y:auto; font-family:var(--mono); font-size:12px; }
+  .log-panel::-webkit-scrollbar { width:4px; }
+  .log-panel::-webkit-scrollbar-thumb { background:var(--gold-dim); }
+  .log-header { position:sticky; top:0; background:var(--dark3); padding:0.75rem 1.25rem; border-bottom:1px solid var(--border); font-size:9px; letter-spacing:0.3em; color:var(--text-dim); text-transform:uppercase; display:flex; justify-content:space-between; }
+  .log-entry { padding:0.5rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.03); display:grid; grid-template-columns:80px 1fr; gap:1rem; line-height:1.5; }
+  .log-time { color:var(--text-dim); font-size:10px; }
+  .log-msg .killer { color:var(--gold); }
+  .log-msg .victim { color:var(--red); }
+  .log-msg .system { color:var(--text-dim); font-style:italic; }
+  .sync-panel { background:var(--panel); border:1px solid var(--border); padding:2rem; display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+  .sync-title { font-family:var(--display); font-size:0.85rem; color:var(--gold); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.75rem; }
+  .sync-desc { font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:1rem; }
+  .code-block { background:var(--dark); border:1px solid rgba(0,229,255,0.15); padding:1rem; font-family:var(--mono); font-size:11px; color:#8fbc8f; line-height:1.7; overflow-x:auto; }
+  .code-block .comment { color:var(--text-dim); }
+  .code-block .keyword { color:#cc99cd; }
+  .code-block .string { color:#7ec8e3; }
+  .divider { height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:0 3rem; }
+  footer { border-top:1px solid var(--border); padding:2rem 3rem; display:flex; align-items:center; justify-content:space-between; background:var(--panel); font-family:var(--mono); font-size:10px; letter-spacing:0.15em; color:var(--text-dim); text-transform:uppercase; }
+  footer .footer-logo { font-family:var(--display); font-size:12px; color:var(--gold); letter-spacing:0.3em; }
+  @media(max-width:900px){ .two-col,.sync-panel{grid-template-columns:1fr} header{padding:0 1.5rem} .section{padding:3rem 1.5rem} nav{display:none} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span>◈</span> SUPER GAMES <span>◈</span></div>
+  <nav>
+    <a href="#arenas">Arena</a>
+    <a href="#leaderboard">Leaderboard</a>
+
+  </nav>
+  <div class="live-badge">
+    <div class="live-dot"></div>
+    <span id="live-status">Awaiting Tributes</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="seal"><span class="seal-inner">⚔</span></div>
+  <p class="hero-district">⮟ The Capitol Presents ⮟</p>
+  <h1 class="hero-title"><span class="accent">SUPER</span><br><span class="red">GAMES</span></h1>
+  <p class="hero-sub">A Roblox Experience</p>
+  <p class="hero-motto">"May the odds be ever in your favor."</p>
+  <div class="hero-cta">
+    <a href="https://www.roblox.com" class="btn btn-primary">➤ Enter The Arena</a>
+    <a href="#arenas" class="btn btn-secondary">View Arenas</a>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+	<span class="ticker-item">Choose from multiple unique arenas to compete in.</span>
+	<span class="ticker-item">Each arena requires a minimum number of players to begin.</span>
+	<span class="ticker-item">Training modes are available to sharpen your skills.</span>
+	<span class="ticker-item">Every arena has a defined Tribute capacity—choose wisely.</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="status-bar">
+    <div class="stat-item">
+      <div class="stat-label">Game Phase</div>
+      <div class="stat-value blink" id="game-phase" style="font-size:1.1rem;letter-spacing:0.1em">STANDBY</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Tributes Alive</div>
+      <div class="stat-value red" id="players-alive">—</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Active Arena</div>
+      <div class="stat-value gold" id="active-arena" style="font-size:0.9rem;letter-spacing:0.05em">NONE</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Time Remaining</div>
+      <div class="stat-value" id="countdown">—:——</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Total Kills</div>
+      <div class="stat-value" id="total-kills">0</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Games Played</div>
+      <div class="stat-value gold" id="games-played">0</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="arenas">
+  <h2 class="section-title">All <span>Annual</span> Arenas</h2>
+  <div class="arenas-grid" style="grid-template-columns:1fr;max-width:700px">
+
+    <div class="arena-card status-standby" data-arena="centennial">
+      <div class="arena-banner" style="height:200px"><div class="arena-banner-bg bg-centennial"></div><div class="arena-icon">100</div></div>
+      <div class="arena-body">
+        <div class="arena-header">
+          <div class="arena-name">Centennial</div>
+          <div class="arena-status-badge badge-standby">Standby</div>
+        </div>
+        <p class="arena-desc">The Centennial is the Capitol's grandest arena.</p>
+        <div class="arena-stats">
+          <div class="arena-stat"><div class="arena-stat-label">Matches</div><div class="arena-stat-val" data-stat="matches">0</div></div>
+          <div class="arena-stat"><div class="arena-stat-label">Capacity</div><div class="arena-stat-val">24</div></div>
+          <div class="arena-stat"><div class="arena-stat-label">Avg Kills</div><div class="arena-stat-val" data-stat="avgkills">—</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section two-col" id="leaderboard">
+  <div>
+    <h2 class="section-title">Top <span>Tributes</span></h2>
+    <table class="leaderboard-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Tribute</th><th>Wins</th><th>Kills</th><th>K/D</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard-body">
+        <tr>
+          <td colspan="5" style="text-align:center;padding:3rem;color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:0.2em">
+            — NO MATCHES PLAYED YET —<br>
+            <span style="font-size:9px;opacity:0.5;margin-top:0.5rem;display:block">Rankings populate after the first game</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="log">
+    <h2 class="section-title">Event <span>Feed</span></h2>
+    <div class="log-panel">
+      <div class="log-header">
+        <span>System Events</span>
+        <span id="log-count">0 entries</span>
+      </div>
+      <div id="log-entries">
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">◈ Super Games ◈</div>
+  <div id="footer-time"></div>
+</footer>
+
+const supabase = window.__SUPABASE__;
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+/* =========================
+   GLOBAL GUARD (prevents double load)
+========================= */
+if (window.__HG_APP__) {
+  console.warn("Duplicate script blocked");
+} else {
+  window.__HG_APP__ = true;
+
+/* =========================
+   CONFIG
+========================= */
+const SUPABASE_URL = "https://xbygyonjoduyalhvcmsd.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kOsCx2ZjQJmvTQ-FZv2ObQ_4z70u9k4";
+
+/* =========================
+   SINGLE SUPABASE INSTANCE
+========================= */
+const supabase =
+  window.__SUPABASE__ ||
+  (window.__SUPABASE__ =
+    window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY));
+
+/* =========================
+   DOM CACHE
+========================= */
+const DOM = {
+  footerTime: document.getElementById("footer-time"),
+  phase: document.getElementById("game-phase"),
+  alive: document.getElementById("players-alive"),
+  arena: document.getElementById("active-arena"),
+  countdown: document.getElementById("countdown"),
+  kills: document.getElementById("total-kills"),
+  games: document.getElementById("games-played"),
+  status: document.getElementById("live-status"),
+  log: document.getElementById("log-entries"),
+  logCount: document.getElementById("log-count")
+};
+
+/* =========================
+   STATE
+========================= */
+const state = {
+  phase: "STANDBY",
+  arena: "none",
+  playersAlive: 0,
+  timeRemaining: 0,
+  totalKills: 0,
+  gamesPlayed: 0
+};
+
+let isConnected = true;
+let seenKillIds = new Set();
+
+/* =========================
+   TIMER GUARD
+========================= */
+if (!window.__HG_TIMERS__) {
+  window.__HG_TIMERS__ = true;
+
+/* CLOCK */
+setInterval(() => {
+  if (DOM.footerTime) {
+    DOM.footerTime.textContent = new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+  }
+}, 1000);
+
+/* COUNTDOWN */
+setInterval(() => {
+  if (
+    (state.phase === "ACTIVE" || state.phase === "PREGAME") &&
+    state.timeRemaining > 0
+  ) {
+    state.timeRemaining--;
+    DOM.countdown.textContent = formatTime(state.timeRemaining);
+  }
+}, 1000);
+
+}
+
+/* =========================
+   UTIL
+========================= */
+function formatTime(sec) {
+  const s = Math.max(0, sec | 0);
+  const m = (s / 60) | 0;
+  const r = s % 60;
+  return `${m}:${r < 10 ? "0" : ""}${r}`;
+}
+
+/* =========================
+   RENDER
+========================= */
+function render() {
+  DOM.phase.textContent = state.phase;
+  DOM.alive.textContent = state.playersAlive;
+  DOM.arena.textContent = state.arena.toUpperCase();
+  DOM.countdown.textContent = formatTime(state.timeRemaining);
+  DOM.kills.textContent = state.totalKills;
+  DOM.games.textContent = state.gamesPlayed;
+
+  DOM.status.textContent =
+    !isConnected ? "CONNECTION LOST" :
+    state.phase === "PREGAME" ? "TRIBUTES LOADING" :
+    state.phase === "ACTIVE" ? "LIVE MATCH" :
+    state.phase === "ENDED" ? "MATCH ENDED" :
+    "AWAITING TRIBUTES";
+
+  document.querySelectorAll(".arena-card").forEach(card => {
+    const active = card.dataset.arena === state.arena && state.phase === "ACTIVE";
+    card.classList.toggle("status-active", active);
+    card.classList.toggle("status-standby", !active);
+
+    const badge = card.querySelector(".arena-status-badge");
+    if (badge) {
+      badge.textContent = active ? "Active" : "Standby";
+      badge.className = "arena-status-badge " + (active ? "badge-active" : "badge-standby");
+    }
+  });
+}
+
+/* =========================
+   LOG
+========================= */
+function addLog(html) {
+  const entry = document.createElement("div");
+  entry.className = "log-entry";
+
+  entry.innerHTML = `
+    <span class="log-time">${new Date().toLocaleTimeString()}</span>
+    <span class="log-msg">${html}</span>
+  `;
+
+  DOM.log.prepend(entry);
+
+  while (DOM.log.children.length > 30) {
+    DOM.log.lastChild.remove();
+  }
+
+  DOM.logCount.textContent = `${DOM.log.children.length} entries`;
+}
+
+/* =========================
+   CONNECTION
+========================= */
+function setConnection(ok) {
+  if (ok === isConnected) return;
+  isConnected = ok;
+
+  let banner = document.getElementById("connection-banner");
+
+  if (!ok) {
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "connection-banner";
+      banner.style.cssText =
+        "position:fixed;top:64px;left:0;right:0;z-index:10000;background:#00b4c8;color:#fff;font-size:11px;text-align:center;padding:8px;";
+      banner.textContent = "⚠ CONNECTION LOST";
+      document.body.appendChild(banner);
+    }
+    addLog('<span class="system">⚠ Connection lost</span>');
+  } else {
+    if (banner) banner.remove();
+    addLog('<span class="system">✓ Connection restored</span>');
+  }
+
+  render();
+}
+
+/* =========================
+   NORMALISE
+========================= */
+function normalise(d) {
+  return {
+    phase: d.phase || "STANDBY",
+    arena: d.arena || "none",
+    playersAlive: d.players_alive ?? d.playersAlive ?? 0,
+    timeRemaining: d.time_remaining ?? d.timeRemaining ?? 0,
+    totalKills: d.total_kills ?? d.totalKills ?? 0,
+    gamesPlayed: d.games_played ?? d.gamesPlayed ?? 0
+  };
+}
+
+/* =========================
+   INITIAL LOAD
+========================= */
+async function initialLoad() {
+  const { data, error } = await supabase
+    .from("game_state")
+    .select("*")
+    .limit(1)
+    .single();
+
+  if (!error && data) {
+    Object.assign(state, normalise(data));
+    render();
+  } else {
+    setConnection(false);
+  }
+}
+
+/* =========================
+   REALTIME (guarded)
+========================= */
+if (!window.__HG_SUBSCRIBED__) {
+  window.__HG_SUBSCRIBED__ = true;
+
+  supabase.channel("game-live")
+    .on("postgres_changes", {
+      event: "*",
+      schema: "public",
+      table: "game_state"
+    }, payload => {
+      const data = normalise(payload.new || {});
+
+      if (data.phase !== state.phase) {
+        if (data.phase === "PREGAME")
+          addLog(`⏳ Pregame in ${data.arena.toUpperCase()}`);
+        if (data.phase === "ACTIVE")
+          addLog(`🔴 Match started in ${data.arena.toUpperCase()}`);
+        if (data.phase === "ENDED")
+          addLog(`⚑ Match ended`);
+      }
+
+      Object.assign(state, data);
+      setConnection(true);
+      render();
+    })
+    .on("postgres_changes", {
+      event: "INSERT",
+      schema: "public",
+      table: "kills"
+    }, payload => {
+      const k = payload.new;
+
+      const id = k.id || `${k.killer}${k.victim}${k.created_at}`;
+      if (seenKillIds.has(id)) return;
+
+      seenKillIds.add(id);
+      if (seenKillIds.size > 500) {
+        seenKillIds.delete(seenKillIds.values().next().value);
+      }
+
+      const icon = k.weapon === "bow" ? "🏹" : "⚔️";
+
+      addLog(
+        `${icon} <span class="killer">${k.killer}</span> eliminated ` +
+        `<span class="victim">${k.victim}</span>`
+      );
+    })
+    .subscribe(status => {
+      if (status === "SUBSCRIBED") setConnection(true);
+      if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") setConnection(false);
+    });
+}
+
+/* =========================
+   START
+========================= */
+initialLoad();
+
+} // END GLOBAL GUARD
+</script>
+</body>
+</html>

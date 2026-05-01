@@ -3,243 +3,595 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUPER GAMES — ROBLOX</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<title>SUPER GAMES - ROBLOX</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #00b4c8;
-    --red-bright: #00e5ff;
-    --gold: #ffe040;
-    --gold-dim: #b8a000;
-    --dark: #020d10;
-    --dark2: #061418;
-    --dark3: #081c20;
-    --panel: #071518;
-    --border: rgba(0,229,255,0.22);
-    --text: #c8eef2;
-    --text-dim: #4a7a82;
-    --mono: 'Share Tech Mono', monospace;
-    --display: 'Orbitron', sans-serif;
-    --body: 'Rajdhani', sans-serif;
+    --cyan: #6ef2ff;
+    --cyan-soft: rgba(110, 242, 255, 0.16);
+    --gold: #ffd36a;
+    --ink: #071116;
+    --ink-soft: #0d1b21;
+    --ink-card: rgba(11, 26, 32, 0.78);
+    --line: rgba(151, 231, 242, 0.15);
+    --line-strong: rgba(151, 231, 242, 0.28);
+    --text: #edf8fb;
+    --text-dim: #8ba8b0;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'Manrope', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    background: var(--dark);
+    background:
+      radial-gradient(circle at top left, rgba(110, 242, 255, 0.08), transparent 24%),
+      radial-gradient(circle at top right, rgba(255, 211, 106, 0.08), transparent 18%),
+      linear-gradient(180deg, #061015 0%, #08141a 42%, #050b0e 100%);
     color: var(--text);
     font-family: var(--body);
     font-size: 16px;
     overflow-x: hidden;
-    cursor: crosshair;
+    line-height: 1.6;
   }
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px);
+    background:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 72px 72px;
     pointer-events: none;
-    z-index: 9999;
-  }
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.65) 100%);
-    pointer-events: none;
-    z-index: 9998;
+    opacity: 0.55;
+    z-index: -1;
   }
   header {
-    position: relative;
-    border-bottom: 1px solid var(--border);
-    padding: 0 3rem;
-    height: 64px;
+    position: sticky;
+    top: 0;
+    padding: 1rem 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--panel);
+    background: rgba(6, 16, 21, 0.82);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(16px);
+    z-index: 50;
   }
-  .logo { font-family: var(--display); font-size: 13px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
-  .logo span { color: var(--red); }
-  nav { display: flex; gap: 2rem; font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--text-dim); }
-  nav a { text-decoration: none; color: inherit; text-transform: uppercase; transition: color 0.2s; }
-  nav a:hover { color: var(--gold); }
-  .live-badge { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--red-bright); text-transform: uppercase; }
-  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red-bright); animation: pulse 1.2s ease-in-out infinite; }
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .logo {
+    font-family: var(--display);
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .logo span { color: var(--gold); }
+  nav { display: flex; gap: 1.5rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--text-dim); text-transform: uppercase; }
+  nav a { text-decoration: none; color: inherit; transition: color 0.2s, opacity 0.2s; }
+  nav a:hover { color: var(--text); }
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.03);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    color: var(--cyan);
+    text-transform: uppercase;
+  }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 1.2s ease-in-out infinite; box-shadow: 0 0 16px rgba(110,242,255,0.55); }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
   .hero {
     position: relative;
-    min-height: 520px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    min-height: 88vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 2rem;
+    align-items: end;
     overflow: hidden;
-    padding: 5rem 2rem;
+    padding: 4rem 3rem 2rem;
   }
   .hero-bg {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,180,200,0.1) 0%, transparent 70%),
-                linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+    background:
+      linear-gradient(90deg, rgba(4, 10, 14, 0.22) 0%, rgba(4,10,14,0.08) 36%, rgba(4,10,14,0.68) 100%),
+      url('https://source.unsplash.com/1600x900/?futuristic,arena,blue,stadium');
+    background-size: cover;
+    background-position: center;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    filter: saturate(1.05) contrast(1.08);
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(5, 13, 17, 0.12) 0%, rgba(5,13,17,0.5) 72%, rgba(5,13,17,0.9) 100%),
+      radial-gradient(circle at 18% 18%, rgba(110,242,255,0.16), transparent 22%),
+      radial-gradient(circle at 72% 20%, rgba(255,211,106,0.12), transparent 16%);
   }
   .hero-grid {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(0,229,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 78px 78px;
     pointer-events: none;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.5), transparent 85%);
   }
   .hero > * { position: relative; z-index: 1; }
+  .hero-copy {
+    padding: 5rem 0 1rem;
+    max-width: 640px;
+  }
+  .hero-kicker {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.24em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
   .seal {
-    width: 80px; height: 80px;
-    border: 2px solid var(--gold-dim);
+    width: 78px; height: 78px;
+    border: 1px solid rgba(255,211,106,0.4);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 2rem;
-    margin: 0 auto 1.5rem;
+    margin: 0 0 1.5rem;
     position: relative;
-    animation: spin 20s linear infinite;
+    background: rgba(255,255,255,0.03);
+    box-shadow: inset 0 0 0 10px rgba(255,255,255,0.015);
   }
-  .seal::before { content:''; position:absolute; inset:-6px; border-radius:50%; border:1px solid rgba(0,229,255,0.2); }
-  .seal::after { content:''; position:absolute; inset:-12px; border-radius:50%; border:1px solid rgba(0,229,255,0.1); }
-  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-  .seal-inner { animation: spin-rev 20s linear infinite; display:block; }
-  @keyframes spin-rev { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
-  .hero-district { font-family:var(--mono); font-size:11px; letter-spacing:0.5em; color:var(--red); text-transform:uppercase; margin-bottom:1.5rem; }
-  .hero-title { font-family:var(--display); font-size:clamp(2.8rem,7vw,6rem); font-weight:900; line-height:0.95; letter-spacing:0.05em; text-transform:uppercase; color:#fff; margin-bottom:0.5rem; }
+  .seal::before { content:''; position:absolute; inset:-7px; border-radius:50%; border:1px solid rgba(110,242,255,0.2); }
+  .seal::after { content:''; position:absolute; inset:-14px; border-radius:50%; border:1px solid rgba(255,211,106,0.12); }
+  .seal-inner { display:block; color: var(--gold); }
+  .hero-district { font-family:var(--mono); font-size:0.76rem; letter-spacing:0.28em; color:var(--text-dim); text-transform:uppercase; margin-bottom:1rem; }
+  .hero-title { font-family:var(--display); font-size:clamp(4.5rem,10vw,8.5rem); line-height:0.88; letter-spacing:0.03em; text-transform:uppercase; color:#fff; margin-bottom:0.5rem; }
   .hero-title .accent { color:var(--gold); }
-  .hero-title .red { color:var(--red); }
-  .hero-sub { font-family:var(--display); font-size:clamp(0.7rem,1.8vw,1.1rem); letter-spacing:0.4em; color:var(--text-dim); text-transform:uppercase; margin-bottom:3rem; }
-  .hero-motto { font-family:var(--body); font-size:1.15rem; font-weight:300; font-style:italic; color:var(--gold); letter-spacing:0.08em; margin-bottom:3rem; opacity:0.8; }
-  .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
-  .btn { font-family:var(--display); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; padding:14px 32px; border:none; cursor:pointer; text-decoration:none; display:inline-block; transition:all 0.2s; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
-  .btn-primary { background:var(--red); color:#fff; }
-  .btn-primary:hover { background:var(--red-bright); transform:scale(1.03); }
-  .btn-secondary { background:transparent; color:var(--gold); border:1px solid var(--gold-dim); }
-  .btn-secondary:hover { background:rgba(212,175,55,0.08); border-color:var(--gold); }
-  .ticker-wrap { background:var(--red); padding:8px 0; overflow:hidden; position:relative; }
-  .ticker-inner { display:flex; animation:ticker 30s linear infinite; white-space:nowrap; }
-  .ticker-item { font-family:var(--mono); font-size:11px; letter-spacing:0.15em; color:rgba(255,255,255,0.9); padding:0 4rem; text-transform:uppercase; }
-  .ticker-item::before { content:'◆'; margin-right:1.5rem; font-size:8px; opacity:0.6; }
-  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-  .section { padding:4rem 3rem; max-width:1400px; margin:0 auto; }
-  .section-label { font-family:var(--mono); font-size:10px; letter-spacing:0.4em; color:var(--red); text-transform:uppercase; margin-bottom:0.5rem; }
-  .section-title { font-family:var(--display); font-size:1.8rem; font-weight:700; color:#fff; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2.5rem; border-bottom:1px solid var(--border); padding-bottom:1rem; }
+  .hero-title .red { color:var(--text); }
+  .hero-sub { font-family:var(--mono); font-size:0.82rem; letter-spacing:0.22em; color:var(--text-dim); text-transform:uppercase; margin-bottom:1.5rem; }
+  .hero-motto { font-size:1.05rem; font-weight:500; color: var(--text); max-width: 50ch; margin-bottom:2rem; }
+  .hero-cta { display:flex; gap:0.9rem; flex-wrap:wrap; justify-content:flex-start; }
+  .hero-strip {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+    gap: 1rem;
+    width: min(100%, 720px);
+  }
+  .hero-strip-card {
+    border: 1px solid var(--line);
+    background: rgba(8, 19, 24, 0.68);
+    border-radius: 1.15rem;
+    padding: 1rem 1rem 1.1rem;
+    text-align: left;
+    backdrop-filter: blur(12px);
+  }
+  .hero-strip-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .hero-strip-value {
+    font-family: var(--display);
+    font-size: 1.55rem;
+    color: #fff;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .hero-side {
+    align-self: end;
+    display: grid;
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+  .hero-feature,
+  .hero-note {
+    border: 1px solid var(--line);
+    border-radius: 1.5rem;
+    background: var(--ink-card);
+    backdrop-filter: blur(14px);
+  }
+  .hero-feature {
+    padding: 1.25rem;
+    min-height: 360px;
+    display: grid;
+    align-content: end;
+    background:
+      linear-gradient(180deg, rgba(7,17,22,0.1), rgba(7,17,22,0.8)),
+      url('https://source.unsplash.com/900x1200/?futuristic,arena,lights');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-feature-label,
+  .hero-note-label {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .hero-feature-title {
+    font-family: var(--display);
+    font-size: 2.6rem;
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+  }
+  .hero-feature-copy {
+    color: rgba(237,248,251,0.85);
+    max-width: 28ch;
+  }
+  .hero-note {
+    padding: 1.15rem 1.25rem;
+  }
+  .hero-note p { color: var(--text-dim); font-size: 0.95rem; }
+  .btn {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 1rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .btn-primary { background: var(--text); color: var(--ink); }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-secondary { background: rgba(255,255,255,0.03); color: var(--text); border-color: var(--line); }
+  .btn-secondary:hover { border-color: var(--line-strong); background: rgba(255,255,255,0.06); }
+  .btn:focus-visible,
+  nav a:focus-visible,
+  .arena-card:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+  }
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+  }
+  .section { padding: 2rem 0; }
+  .section-shell { background: none; border: 0; box-shadow: none; }
+  .section-intro {
+    max-width: 760px;
+    margin: 0.25rem 0 2rem;
+    color: var(--text-dim);
+    font-size: 1rem;
+  }
+  .section-label { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.22em; color:var(--cyan); text-transform:uppercase; margin-bottom:0.5rem; }
+  .section-title { font-family:var(--display); font-size:3rem; color:#fff; letter-spacing:0.04em; text-transform:uppercase; margin-bottom:1rem; }
   .section-title span { color:var(--gold); }
   .status-bar {
-    background:var(--panel); border:1px solid var(--border); padding:1.5rem 2rem;
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1.5rem;
-    margin-bottom:3rem; clip-path:polygon(16px 0%,100% 0%,calc(100% - 16px) 100%,0% 100%);
-    position:relative;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 1.5rem;
+    padding: 1.2rem;
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap: 0;
   }
-  .status-bar::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--red),transparent); }
-  .stat-item { text-align:center; }
-  .stat-label { font-family:var(--mono); font-size:9px; letter-spacing:0.3em; color:var(--text-dim); text-transform:uppercase; margin-bottom:6px; }
-  .stat-value { font-family:var(--display); font-size:1.8rem; font-weight:900; color:#fff; line-height:1; }
-  .stat-value.red { color:var(--red-bright); }
+  .status-bar::before { display:none; }
+  .stat-item {
+    padding: 0.9rem 1rem;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    text-align: left;
+  }
+  .stat-item:last-child { border-right: 0; }
+  .stat-label { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.14em; color:var(--text-dim); text-transform:uppercase; margin-bottom:0.35rem; }
+  .stat-value { font-family:var(--display); font-size:2rem; color:#fff; line-height:1; letter-spacing: 0.03em; }
+  .stat-value.red { color:var(--cyan); }
   .stat-value.gold { color:var(--gold); }
   .stat-value.blink { animation:blink 1s step-end infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .arenas-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5rem; }
-  .arena-card { background:var(--panel); border:1px solid var(--border); position:relative; overflow:hidden; transition:border-color 0.3s,transform 0.3s; cursor:pointer; }
-  .arena-card:hover { border-color:var(--gold); transform:translateY(-3px); }
-  .arena-card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; }
-  .arena-card.status-active::before { background:var(--red-bright); }
-  .arena-card.status-standby::before { background:var(--gold); opacity:0.5; }
-  .arena-card.status-locked::before { background:var(--text-dim); opacity:0.3; }
-  .arena-banner { height:130px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
-  .arena-banner-bg { position:absolute; inset:0; opacity:0.5; }
-  .arena-icon { font-size:3.5rem; position:relative; z-index:1; }
-  .bg-centennial { background:radial-gradient(ellipse at 50% 60%,#002a30 0%,#001a1f 40%,#000c10 100%),repeating-linear-gradient(45deg,rgba(0,229,255,0.03) 0px,rgba(0,229,255,0.03) 1px,transparent 1px,transparent 40px); }
-  .arena-body { padding:1.25rem; }
+  .feature-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .arena-card {
+    min-height: 560px;
+    background: var(--ink-card);
+    border: 1px solid var(--line);
+    border-radius: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s;
+    cursor: pointer;
+  }
+  .arena-card:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+  .arena-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,13,17,0.1) 0%, rgba(5,13,17,0.58) 58%, rgba(5,13,17,0.96) 100%);
+    pointer-events: none;
+  }
+  .arena-card::before { content:''; position:absolute; top:1.2rem; right:1.2rem; width:0.8rem; height:0.8rem; border-radius:50%; background: var(--gold); box-shadow: 0 0 20px rgba(255,211,106,0.7); z-index: 2; }
+  .arena-banner { position:absolute; inset:0; overflow:hidden; display:flex; align-items:flex-start; justify-content:flex-start; padding: 1.5rem; }
+  .arena-banner-bg { position:absolute; inset:0; opacity:1; }
+  .arena-icon {
+    font-size: 2rem;
+    position: relative;
+    z-index: 2;
+    width: 3rem;
+    height: 3rem;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(6px);
+  }
+  .bg-centennial {
+    background-image:
+      linear-gradient(135deg, rgba(110,242,255,0.08), transparent 32%, rgba(255,211,106,0.12)),
+      url('https://source.unsplash.com/1600x900/?futuristic,arena,blue,stadium');
+    background-position: center;
+    background-size: cover;
+    filter: saturate(1.05) contrast(1.05);
+  }
+  .arena-body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 2rem;
+  }
+  .arena-meta {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .arena-meta span {
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
   .arena-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:0.75rem; gap:0.75rem; }
-  .arena-name { font-family:var(--display); font-size:1rem; font-weight:700; color:#fff; letter-spacing:0.05em; text-transform:uppercase; }
-  .arena-status-badge { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; padding:3px 8px; border:1px solid; text-transform:uppercase; white-space:nowrap; flex-shrink:0; }
-  .badge-active { color:var(--red-bright); border-color:var(--red-bright); animation:pulse-border 1.5s ease infinite; }
-  .badge-standby { color:var(--gold); border-color:var(--gold-dim); }
-  .badge-locked { color:var(--text-dim); border-color:rgba(106,106,136,0.3); }
+  .arena-name { font-family:var(--display); font-size:4rem; color:#fff; letter-spacing:0.04em; text-transform:uppercase; line-height: 0.92; }
+  .arena-status-badge { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.14em; padding:0.55rem 0.8rem; border:1px solid; border-radius:999px; text-transform:uppercase; white-space:nowrap; flex-shrink:0; }
+  .badge-active { color:var(--cyan); border-color:rgba(110,242,255,0.35); background: rgba(110,242,255,0.08); animation:pulse-border 1.5s ease infinite; }
+  .badge-standby { color:var(--gold); border-color:rgba(255,211,106,0.35); background: rgba(255,211,106,0.08); }
+  .badge-locked { color:var(--text-dim); border-color:rgba(255,255,255,0.1); }
   @keyframes pulse-border { 0%,100%{box-shadow:0 0 0 0 rgba(255,34,68,0)} 50%{box-shadow:0 0 8px 2px rgba(255,34,68,0.25)} }
-  .arena-desc { font-size:13px; color:var(--text-dim); line-height:1.5; margin-bottom:1rem; font-weight:300; }
-  .arena-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem; padding-top:0.75rem; border-top:1px solid rgba(0,229,255,0.1); }
-  .arena-stat { text-align:center; }
-  .arena-stat-label { font-family:var(--mono); font-size:8px; letter-spacing:0.2em; color:var(--text-dim); text-transform:uppercase; margin-bottom:3px; }
-  .arena-stat-val { font-family:var(--mono); font-size:14px; color:var(--gold); }
-  .arena-card.status-active .arena-stat-val { color:var(--red-bright); }
-  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+  .arena-desc { font-size:1rem; color:rgba(237,248,251,0.82); max-width: 44ch; margin-bottom:1.4rem; }
+  .arena-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0.75rem; }
+  .arena-stat {
+    text-align:left;
+    padding: 0.95rem 1rem;
+    border-radius: 1rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .arena-stat-label { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.14em; color:var(--text-dim); text-transform:uppercase; margin-bottom:0.25rem; }
+  .arena-stat-val { font-family:var(--display); font-size:1.7rem; color:#fff; letter-spacing: 0.03em; }
+  .arena-card.status-active .arena-stat-val { color:var(--cyan); }
+  .side-stack {
+    display: grid;
+    gap: 1rem;
+  }
+  .info-card {
+    border: 1px solid var(--line);
+    border-radius: 1.5rem;
+    background: rgba(255,255,255,0.03);
+    padding: 1.3rem;
+  }
+  .info-card-label {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 0.85rem;
+  }
+  .info-card h3 {
+    font-family: var(--display);
+    font-size: 2rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .info-card p { color: var(--text-dim); }
+  .info-list {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 0.85rem;
+  }
+  .info-list-item {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 0.85rem;
+  }
+  .info-list-item strong {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+  .data-shell {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 1.5rem;
+    padding: 1.4rem;
+  }
   .leaderboard-table { width:100%; border-collapse:collapse; font-family:var(--mono); font-size:13px; }
-  .leaderboard-table th { font-size:9px; letter-spacing:0.3em; color:var(--text-dim); text-transform:uppercase; padding:0.75rem 1rem; border-bottom:1px solid var(--border); text-align:left; font-weight:400; }
-  .leaderboard-table td { padding:0.9rem 1rem; border-bottom:1px solid rgba(0,229,255,0.07); vertical-align:middle; }
-  .leaderboard-table tr:hover td { background:rgba(0,229,255,0.03); }
-  .rank-num { font-family:var(--display); font-size:1.1rem; color:var(--text-dim); font-weight:900; }
+  .leaderboard-table th { font-size:0.62rem; letter-spacing:0.16em; color:var(--text-dim); text-transform:uppercase; padding:0.75rem 0.9rem; border-bottom:1px solid var(--line); text-align:left; font-weight:400; }
+  .leaderboard-table td { padding:0.95rem 0.9rem; border-bottom:1px solid rgba(255,255,255,0.06); vertical-align:middle; }
+  .leaderboard-table tr:hover td { background:rgba(255,255,255,0.025); }
+  .leaderboard-empty {
+    text-align:center;
+    padding:3rem;
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:0.68rem;
+    letter-spacing:0.16em;
+  }
+  .rank-num { font-family:var(--display); font-size:1.5rem; color:var(--text-dim); }
   .rank-num.top { color:var(--gold); }
   .rank-num.second { color:#a0a0b0; }
   .rank-num.third { color:#8b5a2b; }
-  .player-name { font-family:var(--body); font-size:15px; font-weight:600; color:#fff; }
-  .district-tag { font-size:9px; letter-spacing:0.15em; color:var(--text-dim); margin-top:2px; text-transform:uppercase; }
-  .kills-count { font-family:var(--display); font-size:1rem; color:var(--red-bright); font-weight:700; }
-  .wins-count { font-family:var(--display); font-size:1rem; color:var(--gold); font-weight:700; }
+  .player-name { font-family:var(--body); font-size:0.96rem; font-weight:700; color:#fff; }
+  .district-tag { font-size:0.6rem; letter-spacing:0.12em; color:var(--text-dim); margin-top:2px; text-transform:uppercase; }
+  .kills-count { font-family:var(--display); font-size:1.35rem; color:var(--cyan); }
+  .wins-count { font-family:var(--display); font-size:1.35rem; color:var(--gold); }
   .bar-wrap { width:80px; height:4px; background:rgba(255,255,255,0.06); overflow:hidden; }
-  .bar-fill { height:100%; background:var(--red); }
-  .log-panel { background:var(--panel); border:1px solid var(--border); max-height:380px; overflow-y:auto; font-family:var(--mono); font-size:12px; }
+  .bar-fill { height:100%; background:var(--cyan); }
+  .log-panel { background: rgba(255,255,255,0.02); border:1px solid var(--line); border-radius: 1.1rem; max-height:420px; overflow-y:auto; font-family:var(--mono); font-size:12px; }
   .log-panel::-webkit-scrollbar { width:4px; }
-  .log-panel::-webkit-scrollbar-thumb { background:var(--gold-dim); }
-  .log-header { position:sticky; top:0; background:var(--dark3); padding:0.75rem 1.25rem; border-bottom:1px solid var(--border); font-size:9px; letter-spacing:0.3em; color:var(--text-dim); text-transform:uppercase; display:flex; justify-content:space-between; }
-  .log-entry { padding:0.5rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.03); display:grid; grid-template-columns:80px 1fr; gap:1rem; line-height:1.5; }
-  .log-time { color:var(--text-dim); font-size:10px; }
+  .log-panel::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.18); }
+  .log-header { position:sticky; top:0; background: var(--ink-soft); padding:0.85rem 1.1rem; border-bottom:1px solid var(--line); font-size:0.62rem; letter-spacing:0.16em; color:var(--text-dim); text-transform:uppercase; display:flex; justify-content:space-between; }
+  .log-entry { padding:0.75rem 1.1rem; border-bottom:1px solid rgba(255,255,255,0.05); display:grid; grid-template-columns:74px 1fr; gap:0.9rem; line-height:1.5; }
+  .log-time { color:var(--text-dim); font-size:0.64rem; }
   .log-msg .killer { color:var(--gold); }
-  .log-msg .victim { color:var(--red); }
+  .log-msg .victim { color:var(--cyan); }
   .log-msg .system { color:var(--text-dim); font-style:italic; }
-  .sync-panel { background:var(--panel); border:1px solid var(--border); padding:2rem; display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-  .sync-title { font-family:var(--display); font-size:0.85rem; color:var(--gold); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.75rem; }
-  .sync-desc { font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:1rem; }
-  .code-block { background:var(--dark); border:1px solid rgba(0,229,255,0.15); padding:1rem; font-family:var(--mono); font-size:11px; color:#8fbc8f; line-height:1.7; overflow-x:auto; }
-  .code-block .comment { color:var(--text-dim); }
-  .code-block .keyword { color:#cc99cd; }
-  .code-block .string { color:#7ec8e3; }
-  .divider { height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:0 3rem; }
-  footer { border-top:1px solid var(--border); padding:2rem 3rem; display:flex; align-items:center; justify-content:space-between; background:var(--panel); font-family:var(--mono); font-size:10px; letter-spacing:0.15em; color:var(--text-dim); text-transform:uppercase; }
-  footer .footer-logo { font-family:var(--display); font-size:12px; color:var(--gold); letter-spacing:0.3em; }
-  @media(max-width:900px){ .two-col,.sync-panel{grid-template-columns:1fr} header{padding:0 1.5rem} .section{padding:3rem 1.5rem} nav{display:none} }
+  .log-msg .highlight { color: var(--cyan); }
+  .log-msg .winner { color: var(--gold); }
+  .divider { height:1px; background:linear-gradient(90deg,transparent,var(--line),transparent); margin:1rem 0; }
+  footer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem 3rem 3rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:0.68rem;
+    letter-spacing:0.14em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+  }
+  footer .footer-logo { font-family:var(--display); font-size:1.5rem; color:var(--text); letter-spacing:0.06em; }
+  @media(max-width:900px){
+    header{padding:1rem 1.25rem}
+    nav{display:none}
+    .hero,
+    .feature-layout,
+    .two-col,
+    .hero-strip { grid-template-columns: 1fr; }
+    .hero { min-height:auto; padding: 2rem 1.25rem 1rem; }
+    .hero-copy { padding-top: 3rem; }
+    .hero-side { padding-bottom: 0; }
+    main { padding: 0 1.25rem 3rem; }
+    .section-title { font-size: 2.3rem; }
+    .status-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat-item { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .stat-item:nth-last-child(-n+2) { border-bottom: 0; }
+    .arena-name { font-size: 3rem; }
+    .arena-stats { grid-template-columns: 1fr; }
+    footer { padding: 1rem 1.25rem 2rem; flex-direction:column; gap:0.75rem; text-align:center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo"><span>◈</span> SUPER GAMES <span>◈</span></div>
-  <div class="live-badge">
-    <div class="live-dot"></div>
-    <span id="live-status">Awaiting Tributes</span>
+  <div class="logo"><span>✦</span> SUPER GAMES</div>
+  <div class="header-nav">
+    <nav aria-label="Primary">
+      <a href="#centennial">Centennial</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#log">Feed</a>
+    </nav>
+    <div class="live-badge" aria-live="polite">
+      <div class="live-dot"></div>
+      <span id="live-status">Awaiting Tributes</span>
+    </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <div class="seal"><span class="seal-inner">⚔</span></div>
-  <p class="hero-district">⮟ The Capitol Presents ⮟</p>
-  <h1 class="hero-title"><span class="accent">SUPER</span><br><span class="red">GAMES</span></h1>
-  <p class="hero-sub">A Roblox Experience</p>
-  <p class="hero-motto">"May the odds be ever in your favor."</p>
-  <div class="hero-cta">
-    <a href="https://www.roblox.com" class="btn btn-primary">➤ Enter The Arena</a>
-    <a href="#arenas" class="btn btn-secondary">View Arenas</a>
+  <div class="hero-copy">
+    <p class="hero-kicker">Single Arena Broadcast</p>
+    <div class="seal"><span class="seal-inner">✦</span></div>
+    <p class="hero-district">Live From The Capitol Floor</p>
+    <h1 class="hero-title"><span class="accent">Centennial</span><br><span class="red">Games</span></h1>
+    <p class="hero-sub">A Roblox Experience</p>
+    <p class="hero-motto">The Capitol has opened the Centennial arena once again. Watch the phase, track the tributes, and see who survives when the Games begin.</p>
+    <div class="hero-cta">
+      <a href="https://www.roblox.com" class="btn btn-primary" target="_blank" rel="noreferrer">Launch Roblox</a>
+      <a href="#centennial" class="btn btn-secondary">View Centennial</a>
+    </div>
+    <div class="hero-strip" aria-label="Quick stats">
+      <div class="hero-strip-card">
+        <div class="hero-strip-label">Connection</div>
+        <div class="hero-strip-value" id="hero-connection">Live Feed Online</div>
+      </div>
+      <div class="hero-strip-card">
+        <div class="hero-strip-label">Current Phase</div>
+        <div class="hero-strip-value" id="hero-phase">Standby</div>
+      </div>
+      <div class="hero-strip-card">
+        <div class="hero-strip-label">Arena Focus</div>
+        <div class="hero-strip-value" id="hero-arena">No Arena</div>
+      </div>
+    </div>
   </div>
+  <aside class="hero-side" aria-label="Featured overview">
+    <div class="hero-feature">
+      <div class="hero-feature-label">Capitol Broadcast</div>
+      <h2 class="hero-feature-title">One Arena. All Eyes On Centennial.</h2>
+      <p class="hero-feature-copy">Twenty-four tributes enter the Capitol's most celebrated battleground, where every countdown, elimination, and victory is watched in real time.</p>
+    </div>
+    <div class="hero-note">
+      <div class="hero-note-label">Official Notice</div>
+      <p>Monitor the arena board below for phase changes, active tribute counts, kill reports, and the latest movement on the standings.</p>
+    </div>
+  </aside>
 </section>
-
-<div class="ticker-wrap">
-  <div class="ticker-inner">
-	<span class="ticker-item">Choose from multiple unique arenas to compete in.</span>
-	<span class="ticker-item">Each arena requires a minimum number of players to begin.</span>
-	<span class="ticker-item">Training modes are available to sharpen your skills.</span>
-	<span class="ticker-item">Every arena has a defined Tribute capacity—choose wisely.</span>
-  </div>
-</div>
-
+<main>
 <div class="section">
   <div class="status-bar">
     <div class="stat-item">
       <div class="stat-label">Game Phase</div>
-      <div class="stat-value blink" id="game-phase" style="font-size:1.1rem;letter-spacing:0.1em">STANDBY</div>
+      <div class="stat-value blink" id="game-phase" style="font-size:1.55rem">STANDBY</div>
     </div>
     <div class="stat-item">
       <div class="stat-label">Tributes Alive</div>
@@ -247,7 +599,7 @@
     </div>
     <div class="stat-item">
       <div class="stat-label">Active Arena</div>
-      <div class="stat-value gold" id="active-arena" style="font-size:0.9rem;letter-spacing:0.05em">NONE</div>
+      <div class="stat-value gold" id="active-arena" style="font-size:1.45rem">NONE</div>
     </div>
     <div class="stat-item">
       <div class="stat-label">Time Remaining</div>
@@ -266,33 +618,59 @@
 
 <div class="divider"></div>
 
-<div class="section" id="arenas">
-  <h2 class="section-title">All <span>Annual</span> Arenas</h2>
-  <div class="arenas-grid" style="grid-template-columns:1fr;max-width:700px">
-
-    <div class="arena-card status-standby" data-arena="centennial">
-      <div class="arena-banner" style="height:200px"><div class="arena-banner-bg bg-centennial"></div><div class="arena-icon">100</div></div>
+<div class="section" id="centennial">
+  <div class="section-label">Arena Dossier</div>
+  <h2 class="section-title">Centennial <span>Only</span></h2>
+  <p class="section-intro">The Centennial is the Capitol's signature arena: one battlefield, one set of rules, and one final survivor. Every system below is tuned to follow that single match from opening phase to final elimination.</p>
+  <div class="feature-layout">
+    <div class="arena-card status-standby" data-arena="centennial" tabindex="0" role="article" aria-label="Centennial arena">
       <div class="arena-body">
+        <div class="arena-meta">
+          <span>24 Tribute Capacity</span>
+        </div>
         <div class="arena-header">
           <div class="arena-name">Centennial</div>
-          <div class="arena-status-badge badge-standby">Standby</div>
         </div>
-        <p class="arena-desc">The Centennial is the Capitol's grandest arena.</p>
+        <p class="arena-desc">The Capitol's grandest battleground, built for spectacle, survival, and the kind of finale that keeps every district watching until the last tribute falls.</p>
         <div class="arena-stats">
           <div class="arena-stat"><div class="arena-stat-label">Matches</div><div class="arena-stat-val" data-stat="matches">0</div></div>
           <div class="arena-stat"><div class="arena-stat-label">Capacity</div><div class="arena-stat-val">24</div></div>
-          <div class="arena-stat"><div class="arena-stat-label">Avg Kills</div><div class="arena-stat-val" data-stat="avgkills">—</div></div>
         </div>
       </div>
     </div>
-
+    <div class="side-stack">
+      <aside class="info-card">
+        <div class="info-card-label">Capitol Briefing</div>
+        <h3>Rules Of The Arena</h3>
+        <p>Every tribute enters the same battlefield, fights under the same conditions, and answers to the same countdown clock.</p>
+        <div class="info-list">
+          <div class="info-list-item">
+            <strong>Single battlefield</strong>
+            <p>The Centennial is the only arena in rotation here, making every match part of the same ongoing spectacle.</p>
+          </div>
+          <div class="info-list-item">
+            <strong>Tribute capacity</strong>
+            <p>Up to twenty-four tributes can be drawn into the arena before the Games fully ignite.</p>
+          </div>
+          <div class="info-list-item">
+            <strong>Victory condition</strong>
+            <p>When the feed goes quiet and only one name remains, the Capitol has its winner.</p>
+          </div>
+        </div>
+      </aside>
+      <aside class="info-card">
+        <div class="info-card-label">Tribute Intel</div>
+        <h3>What To Watch</h3>
+        <p>Keep an eye on the phase tracker, the live kill feed, and the standings board to see who is climbing, who is falling, and who is closest to surviving the Games.</p>
+      </aside>
+    </div>
   </div>
 </div>
 
 <div class="divider"></div>
 
 <div class="section two-col" id="leaderboard">
-  <div>
+  <div class="data-shell">
     <h2 class="section-title">Top <span>Tributes</span></h2>
     <table class="leaderboard-table">
       <thead>
@@ -301,17 +679,12 @@
         </tr>
       </thead>
       <tbody id="leaderboard-body">
-        <tr>
-          <td colspan="5" style="text-align:center;padding:3rem;color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:0.2em">
-            — NO MATCHES PLAYED YET —<br>
-            <span style="font-size:9px;opacity:0.5;margin-top:0.5rem;display:block">Rankings populate after the first game</span>
-          </td>
-        </tr>
+        <tr><td colspan="5" class="leaderboard-empty">— NO MATCHES PLAYED YET —<span style="font-size:9px;opacity:0.5;margin-top:0.5rem;display:block">Rankings populate after the first game</span></td></tr>
       </tbody>
     </table>
   </div>
 
-  <div id="log">
+  <div class="data-shell" id="log">
     <h2 class="section-title">Event <span>Feed</span></h2>
     <div class="log-panel">
       <div class="log-header">
@@ -319,13 +692,18 @@
         <span id="log-count">0 entries</span>
       </div>
       <div id="log-entries">
+        <div class="log-entry">
+          <span class="log-time">System</span>
+          <span class="log-msg"><span class="system">Waiting for the first live event...</span></span>
+        </div>
       </div>
     </div>
   </div>
 </div>
+</main>
 
 <footer>
-  <div class="footer-logo">◈ Super Games ◈</div>
+  <div class="footer-logo">✦ Super Games</div>
   <div id="footer-time"></div>
 </footer>
 
@@ -367,7 +745,11 @@ const DOM = {
   games: document.getElementById("games-played"),
   status: document.getElementById("live-status"),
   log: document.getElementById("log-entries"),
-  logCount: document.getElementById("log-count")
+  logCount: document.getElementById("log-count"),
+  heroConnection: document.getElementById("hero-connection"),
+  heroPhase: document.getElementById("hero-phase"),
+  heroArena: document.getElementById("hero-arena"),
+  leaderboardBody: document.getElementById("leaderboard-body")
 };
 
 /* =========================
@@ -384,6 +766,7 @@ const state = {
 
 let isConnected = true;
 let seenKillIds = new Set();
+let recentPlayers = new Map();
 
 /* =========================
    TIMER GUARD
@@ -435,6 +818,9 @@ function render() {
   DOM.countdown.textContent = formatTime(state.timeRemaining);
   DOM.kills.textContent = state.totalKills;
   DOM.games.textContent = state.gamesPlayed;
+  DOM.heroConnection.textContent = isConnected ? "Live Feed Online" : "Feed Offline";
+  DOM.heroPhase.textContent = state.phase;
+  DOM.heroArena.textContent = state.arena === "none" ? "No Arena" : state.arena.toUpperCase();
 
   DOM.status.textContent =
     !isConnected ? "CONNECTION LOST" :
@@ -456,10 +842,53 @@ function render() {
   });
 }
 
+function setLeaderboardEmpty() {
+  DOM.leaderboardBody.innerHTML =
+    '<tr><td colspan="5" class="leaderboard-empty">— NO MATCHES PLAYED YET —<span style="font-size:9px;opacity:0.5;margin-top:0.5rem;display:block">Rankings populate after the first game</span></td></tr>';
+}
+
+function renderLeaderboard(players) {
+  if (!Array.isArray(players) || players.length === 0) {
+    setLeaderboardEmpty();
+    return;
+  }
+
+  DOM.leaderboardBody.innerHTML = players.map((player, index) => {
+    const rankClass = index === 0 ? "top" : index === 1 ? "second" : index === 2 ? "third" : "";
+    const wins = player.wins ?? 0;
+    const kills = player.kills ?? 0;
+    const deaths = Math.max(1, player.deaths ?? 0);
+    const kd = (kills / deaths).toFixed(1);
+    const district = player.district || "Unassigned";
+    const name = player.username || player.name || `Tribute ${index + 1}`;
+
+    return `
+      <tr>
+        <td><span class="rank-num ${rankClass}">#${index + 1}</span></td>
+        <td>
+          <div class="player-name">${name}</div>
+          <div class="district-tag">${district}</div>
+        </td>
+        <td><span class="wins-count">${wins}</span></td>
+        <td><span class="kills-count">${kills}</span></td>
+        <td>
+          <div>${kd}</div>
+          <div class="bar-wrap" aria-hidden="true"><div class="bar-fill" style="width:${Math.min(100, kills * 10)}%"></div></div>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
 /* =========================
    LOG
 ========================= */
 function addLog(html) {
+  const existingPlaceholder = DOM.log.querySelector(".system");
+  if (existingPlaceholder && DOM.log.children.length === 1) {
+    DOM.log.innerHTML = "";
+  }
+
   const entry = document.createElement("div");
   entry.className = "log-entry";
 
@@ -522,17 +951,22 @@ function normalise(d) {
    INITIAL LOAD
 ========================= */
 async function initialLoad() {
-  const { data, error } = await supabase
-    .from("game_state")
-    .select("*")
-    .limit(1)
-    .single();
+  const [{ data, error }, boardResult] = await Promise.all([
+    supabase.from("game_state").select("*").limit(1).single(),
+    supabase.from("player_stats").select("*").order("wins", { ascending: false }).order("kills", { ascending: false }).limit(8)
+  ]);
 
   if (!error && data) {
     Object.assign(state, normalise(data));
     render();
   } else {
     setConnection(false);
+  }
+
+  if (!boardResult.error && boardResult.data) {
+    renderLeaderboard(boardResult.data);
+  } else {
+    setLeaderboardEmpty();
   }
 }
 
@@ -552,11 +986,11 @@ if (!window.__HG_SUBSCRIBED__) {
 
       if (data.phase !== state.phase) {
         if (data.phase === "PREGAME")
-          addLog(`⏳ Pregame in ${data.arena.toUpperCase()}`);
+          addLog(`⏳ <span class="highlight">Pregame</span> in ${data.arena.toUpperCase()}`);
         if (data.phase === "ACTIVE")
-          addLog(`🔴 Match started in ${data.arena.toUpperCase()}`);
+          addLog(`🔴 Match started in <span class="highlight">${data.arena.toUpperCase()}</span>`);
         if (data.phase === "ENDED")
-          addLog(`⚑ Match ended`);
+          addLog(`⚑ Match ended in <span class="highlight">${data.arena.toUpperCase()}</span>`);
       }
 
       Object.assign(state, data);
@@ -584,6 +1018,24 @@ if (!window.__HG_SUBSCRIBED__) {
         `${icon} <span class="killer">${k.killer}</span> eliminated ` +
         `<span class="victim">${k.victim}</span>`
       );
+    })
+    .on("postgres_changes", {
+      event: "*",
+      schema: "public",
+      table: "player_stats"
+    }, payload => {
+      const row = payload.new;
+      if (!row) return;
+
+      const key = row.id || row.username || row.name;
+      if (!key) return;
+      recentPlayers.set(key, row);
+
+      const players = Array.from(recentPlayers.values())
+        .sort((a, b) => (b.wins ?? 0) - (a.wins ?? 0) || (b.kills ?? 0) - (a.kills ?? 0))
+        .slice(0, 8);
+
+      renderLeaderboard(players);
     })
     .subscribe(status => {
       if (status === "SUBSCRIBED") setConnection(true);

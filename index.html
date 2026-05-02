@@ -766,6 +766,7 @@ const state = {
 let isConnected = true;
 let seenKillIds = new Set();
 let recentPlayers = new Map();
+let pollInFlight = false;
 
 /* =========================
    TIMER GUARD
@@ -946,6 +947,75 @@ function normalise(d) {
   };
 }
 
+function isNewMatch(nextState) {
+  if ((nextState.gamesPlayed ?? 0) > (state.gamesPlayed ?? 0)) {
+    return true;
+  }
+
+  const phaseStayedLive =
+    (state.phase === "ACTIVE" || state.phase === "PREGAME") &&
+    (nextState.phase === "ACTIVE" || nextState.phase === "PREGAME");
+
+  if (!phaseStayedLive) {
+    return false;
+  }
+
+  const timerReset =
+    (nextState.timeRemaining ?? 0) > (state.timeRemaining ?? 0) + 10;
+  const killsReset =
+    (state.totalKills ?? 0) > 0 && (nextState.totalKills ?? 0) === 0;
+  const arenaChanged = (nextState.arena || "none") !== (state.arena || "none");
+
+  return arenaChanged || (timerReset && killsReset);
+}
+
+function applyGameState(data) {
+  const nextState = normalise(data || {});
+  const newMatch = isNewMatch(nextState);
+
+  if (newMatch) {
+    seenKillIds.clear();
+    addLog(`🎬 New match loaded in <span class="highlight">${nextState.arena.toUpperCase()}</span>`);
+  } else if (nextState.phase !== state.phase) {
+    if (nextState.phase === "PREGAME")
+      addLog(`⏳ <span class="highlight">Pregame</span> in ${nextState.arena.toUpperCase()}`);
+    if (nextState.phase === "ACTIVE")
+      addLog(`🔴 Match started in <span class="highlight">${nextState.arena.toUpperCase()}</span>`);
+    if (nextState.phase === "ENDED")
+      addLog(`⚑ Match ended in <span class="highlight">${nextState.arena.toUpperCase()}</span>`);
+  }
+
+  Object.assign(state, nextState);
+  setConnection(true);
+  render();
+}
+
+async function pollGameState() {
+  if (pollInFlight) return;
+  pollInFlight = true;
+
+  try {
+    const { data, error } = await supabase
+      .from("game_state")
+      .select("*")
+      .limit(1)
+      .single();
+
+    if (error) {
+      setConnection(false);
+      return;
+    }
+
+    if (data) {
+      applyGameState(data);
+    }
+  } catch (_error) {
+    setConnection(false);
+  } finally {
+    pollInFlight = false;
+  }
+}
+
 /* =========================
    INITIAL LOAD
 ========================= */
@@ -956,8 +1026,7 @@ async function initialLoad() {
   ]);
 
   if (!error && data) {
-    Object.assign(state, normalise(data));
-    render();
+    applyGameState(data);
   } else {
     setConnection(false);
   }
@@ -981,20 +1050,7 @@ if (!window.__HG_SUBSCRIBED__) {
       schema: "public",
       table: "game_state"
     }, payload => {
-      const data = normalise(payload.new || {});
-
-      if (data.phase !== state.phase) {
-        if (data.phase === "PREGAME")
-          addLog(`⏳ <span class="highlight">Pregame</span> in ${data.arena.toUpperCase()}`);
-        if (data.phase === "ACTIVE")
-          addLog(`🔴 Match started in <span class="highlight">${data.arena.toUpperCase()}</span>`);
-        if (data.phase === "ENDED")
-          addLog(`⚑ Match ended in <span class="highlight">${data.arena.toUpperCase()}</span>`);
-      }
-
-      Object.assign(state, data);
-      setConnection(true);
-      render();
+      applyGameState(payload.new || {});
     })
     .on("postgres_changes", {
       event: "INSERT",
@@ -1046,6 +1102,7 @@ if (!window.__HG_SUBSCRIBED__) {
    START
 ========================= */
 initialLoad();
+setInterval(pollGameState, 3000);
 
 } // END GLOBAL GUARD
 </script>
